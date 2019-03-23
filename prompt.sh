@@ -2,10 +2,32 @@ find_git_branch() {
   # Based on: http://stackoverflow.com/a/13003854/170413
   local branch
   if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
-    if [[ "$branch" == "HEAD" ]]; then
+    local color=$txtwht
+    if [[ "$branch" == "HEAD" ]]
+    then
+      color=$bldred
       branch='detached*'
+    elif [[ "$branch" == *"feature"* ]]
+    then
+      color=$txtcyn
+    elif [[ "$branch" == "master" ]]
+    then
+      color=$txtpur
+    elif [[ "$branch" == "develop" ]]
+    then
+      color=$txtwht
+    elif [[ "$branch" == *"bugfix"* ]]
+    then
+      color=$txtred
+    elif [[ "$branch" == *"release"* ]]
+    then
+      color=$txtylw
+    elif [[ "$branch" == *"hotfix"* ]]
+    then
+      color=$txtylw
     fi
-    git_branch="($branch)"
+
+    git_branch="$color$branch"
   else
     git_branch=""
   fi
@@ -14,7 +36,7 @@ find_git_branch() {
 find_git_dirty() {
   local status=$(git status --porcelain 2> /dev/null)
   if [[ "$status" != "" ]]; then
-    git_dirty='*'
+    git_dirty="🔥"
   else
     git_dirty=''
   fi
@@ -33,8 +55,8 @@ find_git_ahead_behind() {
         git_ahead_behind=''
       else
         git_ahead_behind=""
-        [[ "$ahead"  != 0 ]] && git_ahead_behind="$git_ahead_behind>$ahead"
-        [[ "$behind" != 0 ]] && git_ahead_behind="$git_ahead_behind<$behind"
+        [[ "$ahead"  != 0 ]] && git_ahead_behind="$git_ahead_behind$bldgrn$ahead"
+        [[ "$behind" != 0 ]] && git_ahead_behind="$git_ahead_behind$bldred$behind"
       fi
     fi
   fi
