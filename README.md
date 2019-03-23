@@ -1,6 +1,6 @@
 # Git Aware Prompt
 
-Forked from [https://github.com/jimeh/git-aware-prompt]
+Forked from https://github.com/jimeh/git-aware-prompt
 I added the ability to see how far ahead or behind the remote you are
 
 Working with Git and its great branching/merging features is
