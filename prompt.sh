@@ -43,7 +43,9 @@ find_git_dirty() {
 }
 
 find_git_ahead_behind() {
+
   local local_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+
   if [[ -n "$local_branch" ]]; then
     local upstream_branch=$(git rev-parse --abbrev-ref "@{upstream}" 2> /dev/null)
     # If the branch is not tracking a specific remote branch, then assume we are tracking origin/[this_branch_name]
@@ -59,6 +61,8 @@ find_git_ahead_behind() {
         [[ "$behind" != 0 ]] && git_ahead_behind="$git_ahead_behind$bldred$behind"
       fi
     fi
+  else
+    git_ahead_behind=''
   fi
 }
 
